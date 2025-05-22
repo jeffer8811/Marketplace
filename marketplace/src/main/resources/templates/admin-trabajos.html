@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Administrar Trabajos</title>
+</head>
+<body>
+    <h1>Lista de Trabajos</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Imagen</th>
+                <th>Precio</th>
+                <th>Contacto</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="trabajo : ${trabajos}">
+                <td th:text="${trabajo.id}"></td>
+                <td th:text="${trabajo.titulo}"></td>
+                <td th:text="${trabajo.descripcion}"></td>
+                <td><img th:src="${trabajo.imagenUrl}" alt="Imagen" width="100" /></td>
+                <td th:text="${trabajo.precio}"></td>
+                <td th:text="${trabajo.numeroContacto}"></td>
+                <td>
+                    <a th:href="@{/admin/trabajos/editar/{id}(id=${trabajo.id})}">Editar</a> |
+                    <a th:href="@{/admin/trabajos/eliminar/{id}(id=${trabajo.id})}" 
+                       onclick="return confirm('¿Seguro quieres eliminar?');">Eliminar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
