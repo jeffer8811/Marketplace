@@ -39,21 +39,21 @@
 ### 🧑‍💼 Panel de administrador  
 Editar, aprobar o eliminar trabajos publicados por estudiantes. Incluye filtros por estado.
 
-<img src="https://github.com/user-attachments/assets/9b7e423d-bda8-4f92-8956-a3e65966188a" width="100%" />
+<img width="1888" height="937" alt="image" src="https://github.com/user-attachments/assets/f5bae8da-95bb-4558-8a64-a212a016dcba"  width="100%"/>
 
 ---
 
 ### 🏠 Página principal  
 Visualización pública de trabajos disponibles, con búsqueda y categorías.
 
-<img src="https://github.com/user-attachments/assets/06468784-cef7-4b44-a507-a8afa51eec0d" width="100%" />
+<img width="1902" height="944" alt="image" src="https://github.com/user-attachments/assets/bd041f29-034c-478f-a9a8-614d61406b0d" width="100%"  />
 
 ---
 
 ### 🛒 Productos disponibles  
 Listado con opciones de añadir al carrito y ver detalles de cada trabajo.
 
-<img src="https://github.com/user-attachments/assets/5ccaae2d-c922-4609-981a-fa06e8cceeb0" width="100%" />
+<img width="1899" height="934" alt="image" src="https://github.com/user-attachments/assets/74f0f0b1-37e7-4911-833c-5ac8f2213bce" width="100%" />
 
 ---
 
@@ -61,7 +61,7 @@ Listado con opciones de añadir al carrito y ver detalles de cada trabajo.
 - Si el usuario es **estudiante**, puede subir nuevos trabajos y responder mensajes.
 - Si es **comprador**, puede ver mensajes e historial de compra.
 
-<img src="https://github.com/user-attachments/assets/f5e26d1e-ad66-4175-89ee-078f887a14b3" width="100%" />
+<img width="1901" height="933" alt="image" src="https://github.com/user-attachments/assets/0070abbc-6250-4030-a0b6-b6bb59d19b7f" width="100%" />
 
 ---
 
