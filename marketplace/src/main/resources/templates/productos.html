@@ -3,13 +3,15 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Diseño Gráfico</title>
+  <title>Productos</title>
 
+  <!-- CSS principal -->
   <link rel="stylesheet" href="/css/diseno-grafico.css" />
 
-  <!-- CSS navbar -->
+  <!-- CSS navbar y footer -->
   <link rel="stylesheet" href="/css/navbar.css" />
   <link rel="stylesheet" href="/css/footer.css" />
+
   <!-- Font Awesome para iconos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
@@ -20,13 +22,13 @@
   <div th:replace="fragments/navbar :: navbar"></div>
 
   <div class="subnav">
-    <h1>Diseño Gráfico</h1>
-    <p>Explora una galería de diseños únicos creados por estudiantes talentosos. Logos, afiches, branding y más.</p>
+    <h1>Todos los Productos</h1>
+    <p>Explora todos los trabajos aprobados publicados por estudiantes: ilustraciones, diseño gráfico, desarrollo web y
+      más.</p>
   </div>
 
   <section class="card-container">
     <div class="card" th:each="trabajo : ${trabajos}">
-
       <!-- Imagen con overlay -->
       <div class="card-img-container">
         <a th:href="@{/trabajo/{id}(id=${trabajo.id})}" style="text-decoration: none; color: inherit;">
@@ -37,7 +39,7 @@
         </a>
       </div>
 
-      <!-- Contenido de la tarjeta con enlace envolviendo solo el texto -->
+      <!-- Contenido de la tarjeta -->
       <div class="card-content">
         <a th:href="@{/trabajo/{id}(id=${trabajo.id})}" style="text-decoration: none; color: inherit;">
           <h2 th:text="${trabajo.titulo}">Título</h2>
@@ -46,6 +48,8 @@
             <span th:text="${trabajo.precio}">0.00</span>
           </p>
         </a>
+
+        <!-- Botón: Agregar al carrito -->
         <form th:action="@{/carrito/agregar}" method="post" style="margin-top: 10px;">
           <input type="hidden" name="id" th:value="${trabajo.id}" />
           <input type="hidden" name="nombre" th:value="${trabajo.titulo}" />
@@ -55,8 +59,8 @@
             style="background-color: #27ae60; color: white; border: none; padding: 6px 10px; border-radius: 5px; cursor: pointer;">
             <i class="fas fa-cart-plus"></i> Agregar al carrito
           </button>
-
         </form>
+
         <!-- Botón: Añadir a favoritos -->
         <form th:action="@{/favoritos/agregar/{id}(id=${trabajo.id})}" method="post" style="margin-top: 10px;">
           <button type="submit" style="background: none; border: none; color: #e67e22; cursor: pointer;">
@@ -64,14 +68,49 @@
           </button>
         </form>
       </div>
+      <!-- Calificación por estrellas -->
+      <div class="estrellas" th:attr="data-trabajo-id=${trabajo.id}">
+        <span data-valor="1">&#9734;</span>
+        <span data-valor="2">&#9734;</span>
+        <span data-valor="3">&#9734;</span>
+        <span data-valor="4">&#9734;</span>
+        <span data-valor="5">&#9734;</span>
+        <input type="hidden" th:name="'calificacion-' + ${trabajo.id}" value="0" />
+      </div>
+
 
     </div>
   </section>
 
-
+  <!-- Incluir footer -->
   <div th:replace="fragments/footer :: footer"></div>
 
   <script src="/JS/Diseñografico.js"></script>
 </body>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const contenedores = document.querySelectorAll(".estrellas");
+
+    contenedores.forEach(contenedor => {
+      const estrellas = contenedor.querySelectorAll("span");
+      const input = contenedor.querySelector("input");
+
+      estrellas.forEach((estrella, index) => {
+        estrella.addEventListener("click", () => {
+          // Quitar selección previa
+          estrellas.forEach(e => e.classList.remove("seleccionada"));
+          // Marcar nuevas estrellas
+          for (let i = 0; i <= index; i++) {
+            estrellas[i].classList.add("seleccionada");
+          }
+          input.value = index + 1;
+          // Aquí podrías enviar la calificación al servidor si deseas
+          console.log("Trabajo ID:", contenedor.dataset.trabajoId, "Calificación:", input.value);
+        });
+      });
+    });
+  });
+</script>
+
 
 </html>

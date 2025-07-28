@@ -56,8 +56,8 @@ public class Usuario {
         this.nombre = nombre;
     }
 
+    // Puedes eliminar este método si no se usa
     public Object getUsuario() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getUsuario'");
     }
 }

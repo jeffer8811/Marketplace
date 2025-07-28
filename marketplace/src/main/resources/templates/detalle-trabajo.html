@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8" />
   <title>Desarrollo Web</title>
@@ -11,26 +12,45 @@
   <!-- Font Awesome para iconos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
-  <!-- Incluir navbar -->
-  <div th:replace="fragments/navbar :: navbar"></div>
 
 <body>
-<div class="detalle-container">
-    <div class="detalle-card">
-        <img th:src="${trabajo.imagenUrl}" th:alt="${trabajo.titulo}" class="detalle-imagen"/>
+  <!-- ✅ Navbar dentro del body -->
+  <div th:replace="fragments/navbar :: navbar"></div>
 
-        <div class="detalle-info">
-            <h1 th:text="${trabajo.titulo}">Título del trabajo</h1>
-            <p class="detalle-descripcion" th:text="${trabajo.descripcion}">Descripción larga del trabajo</p>
-            <p><strong>Precio:</strong> S/ <span th:text="${trabajo.precio}">0.00</span></p>
-            <p><strong>Contacto:</strong> <span th:text="${trabajo.numeroContacto}">000000000</span></p>
-            <a href="/index" class="volver-btn">← Volver al inicio</a>
-        </div>
+  <div class="detalle-container">
+    <div class="detalle-card">
+      <img th:src="${trabajo.imagenUrl}" th:alt="${trabajo.titulo}" class="detalle-imagen" />
+
+      <div class="detalle-info">
+        <h1 th:text="${trabajo.titulo}">Título del trabajo</h1>
+        <p class="detalle-descripcion" th:text="${trabajo.descripcion}">Descripción larga del trabajo</p>
+        <p><strong>Precio:</strong> S/ <span th:text="${trabajo.precio}">0.00</span></p>
+        <p><strong>Contacto:</strong> <span th:text="${trabajo.numeroContacto}">000000000</span></p>
+        <a href="/" class="volver-btn">← Volver al inicio</a>
+
+        <form th:action="@{/carrito/agregar}" method="post" style="margin-top: 10px;">
+          <input type="hidden" name="id" th:value="${trabajo.id}" />
+          <input type="hidden" name="nombre" th:value="${trabajo.titulo}" />
+          <input type="hidden" name="precio" th:value="${trabajo.precio}" />
+          <input type="hidden" name="cantidad" value="1" />
+          <button type="submit"
+            style="background-color: #27ae60; color: white; border: none; padding: 6px 10px; border-radius: 5px; cursor: pointer;">
+            <i class="fas fa-cart-plus"></i> Agregar al carrito
+          </button>
+        </form>
+
+        <!-- Botón para chatear con el vendedor -->
+        <a th:href="@{/chat/{id}(id=${trabajo.usuario.id})}"
+           style="display: inline-block; margin-top: 10px; background-color: #3498db; color: white;
+                  padding: 6px 10px; border-radius: 5px; text-decoration: none;">
+          <i class="fas fa-comments"></i> Comunicarse con el vendedor
+        </a>
+      </div>
     </div>
-</div>
+  </div>
+
+  <!-- ✅ Footer dentro del body -->
+  <div th:replace="fragments/footer :: footer"></div>
 </body>
 
-
-
 </html>
-<div th:replace="fragments/footer :: footer"></div>

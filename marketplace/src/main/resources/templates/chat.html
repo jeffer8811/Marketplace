@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(180deg, #1e3c72, #2a5298); /* azul profundo a celeste */
+    color: #fff;
+    min-height: 100vh;
+  }
+
+  .chat-container {
+    max-width: 500px;
+    margin: auto;
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 20px;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+  }
+
+  h2 {
+    color: #1e3c72;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+
+  .chat-messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mensaje {
+    max-width: 70%;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    word-wrap: break-word;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .emisor {
+    background-color: #a2d2ff; /* celeste claro */
+    color: #1b1b1b;
+    align-self: flex-end;
+    border-bottom-right-radius: 0;
+  }
+
+  .receptor {
+    background-color: #d6e4f0; /* azul muy claro */
+    color: #1b1b1b;
+    align-self: flex-start;
+    border-bottom-left-radius: 0;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  textarea {
+    resize: none;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    height: 60px;
+  }
+
+  button {
+    background-color: #1e3c72;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  button:hover {
+    background-color: #16325c;
+  }
+
+  .volver-btn {
+    text-align: center;
+    margin-top: 15px;
+  }
+
+  .volver-btn a {
+    color: #1e3c72;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .volver-btn a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+</head>
+<body>
+
+<div class="chat-container">
+  <h2>Conversación con <span th:text="${otroUsuario.nombre}">Usuario</span></h2>
+
+  <div class="chat-messages" id="chatBox">
+    <div th:each="mensaje : ${mensajes}">
+      <div th:if="${mensaje.emisor.id} == ${actual.id}" class="mensaje emisor">
+        <span th:text="${mensaje.contenido}">Mensaje propio</span>
+      </div>
+      <div th:if="${mensaje.emisor.id} != ${actual.id}" class="mensaje receptor">
+        <span th:text="${mensaje.contenido}">Mensaje recibido</span>
+      </div>
+    </div>
+  </div>
+
+  <form th:action="@{/chat/enviar}" method="post">
+    <input type="hidden" name="receptorId" th:value="${otroUsuario.id}" />
+    <textarea name="contenido" placeholder="Escribe tu mensaje..." required></textarea>
+    <button type="submit"><i class="fas fa-paper-plane"></i> Enviar</button>
+  </form>
+
+  <div class="volver-btn">
+    <a href="/chat/inbox"><i class="fas fa-arrow-left"></i> Volver a mensajes</a>
+  </div>
+</div>
+
+<script>
+  const chatBox = document.getElementById("chatBox");
+  if (chatBox) {
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+</script>
+
+</body>
+</html>

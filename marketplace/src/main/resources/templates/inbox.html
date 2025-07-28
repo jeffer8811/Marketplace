@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mis mensajes</title>
+  <link rel="stylesheet" href="/css/navbar.css" />
+  <link rel="stylesheet" href="/css/footer.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    .inbox-container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #f4f4f4;
+      border-radius: 10px;
+    }
+
+    .usuario-chat {
+      background-color: white;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .usuario-chat a {
+      text-decoration: none;
+      color: #2c3e50;
+      font-weight: bold;
+    }
+
+    .usuario-chat i {
+      color: #3498db;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="inbox-container">
+  <h2><i class="fas fa-envelope-open-text"></i> Mis mensajes</h2>
+
+  <div th:if="${#lists.isEmpty(usuariosConversados)}">
+    <p>No tienes conversaciones todavía.</p>
+  </div>
+
+  <div th:each="usuario : ${usuariosConversados}" class="usuario-chat">
+    <a th:href="@{/chat/{id}(id=${usuario.id})}">
+      <span th:text="${usuario.nombre}">Nombre del usuario</span>
+    </a>
+    <i class="fas fa-comments"></i>
+  </div>
+</div>
+
+<!-- Footer -->
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>

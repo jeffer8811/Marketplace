@@ -82,3 +82,17 @@
     grid-template-columns: 1fr;
   }
 }
+.estrellas {
+  margin-top: 10px;
+}
+
+.estrellas span {
+  font-size: 22px;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.estrellas span.seleccionada {
+  color: #f1c40f;
+}

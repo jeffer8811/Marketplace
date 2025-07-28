@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Pago</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f9f9f9;
+      text-align: center;
+    }
+
+    form {
+      display: inline-block;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #ccc;
+      margin-top: 50px;
+    }
+
+    input {
+      display: block;
+      margin: 10px auto;
+      padding: 10px;
+      width: 250px;
+    }
+
+    button {
+      background-color: #2ecc71;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #27ae60;
+    }
+  </style>
+</head>
+<body>
+  <h1>Simulación de Pago</h1>
+<form th:action="@{/carrito/procesar}" method="post" style="display: flex; flex-direction: column; gap: 10px; max-width: 400px; margin: 0 auto;">
+  <input type="text" name="nombre" placeholder="Nombre en la tarjeta" required />
+  <input type="text" name="numero" placeholder="Número de tarjeta (16 dígitos)" pattern="\d{16}" required />
+  <input type="text" name="cvv" placeholder="CVV" pattern="\d{3}" required />
+  <input type="text" name="vencimiento" placeholder="MM/AA" pattern="\d{2}/\d{2}" required />
+
+  <div style="display: flex; justify-content: space-between;">
+    <button type="submit" style="background-color: #27ae60; color: white; padding: 10px 20px; border: none; border-radius: 4px;">Pagar</button>
+    
+    <a href="/" style="text-decoration: none; background-color: #e74c3c; color: white; padding: 10px 20px; border-radius: 4px; display: inline-block;">Cancelar</a>
+  </div>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mis Favoritos</title>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="/css/diseno-grafico.css" />
+  <link rel="stylesheet" href="/css/navbar.css" />
+  <link rel="stylesheet" href="/css/footer.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div th:replace="fragments/navbar :: navbar"></div>
+
+  <div class="subnav">
+    <h1>Mis Trabajos Favoritos</h1>
+    <p>Esta es la lista de trabajos que marcaste como favoritos.</p>
+  </div>
+
+  <!-- Mostrar si no hay favoritos -->
+  <div th:if="${#lists.isEmpty(favoritos)}" style="text-align: center; margin-top: 40px;">
+    <p>Aún no has añadido trabajos a favoritos.</p>
+    <a href="/" style="text-decoration: none; color: #3498db;">Volver al inicio</a>
+  </div>
+
+  <!-- Mostrar lista de favoritos -->
+  <section class="card-container" th:if="${!#lists.isEmpty(favoritos)}">
+    <div class="card" th:each="fav : ${favoritos}">
+      <div class="card-img-container">
+        <a th:href="@{/trabajo/{id}(id=${fav.trabajo.id})}" style="text-decoration: none; color: inherit;">
+          <img th:src="${fav.trabajo.imagenUrl}" th:alt="${fav.trabajo.titulo}" />
+          <div class="img-hover-overlay">
+            <p class="descripcion-hover" th:text="${fav.trabajo.descripcion}">Descripción</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="card-content">
+        <a th:href="@{/trabajo/{id}(id=${fav.trabajo.id})}" style="text-decoration: none; color: inherit;">
+          <h2 th:text="${fav.trabajo.titulo}">Título</h2>
+          <p>
+            <strong>Precio: </strong>S/
+            <span th:text="${fav.trabajo.precio}">0.00</span>
+          </p>
+        </a>
+
+        <!-- Botón para eliminar de favoritos -->
+        <form th:action="@{/favoritos/eliminar/{id}(id=${fav.trabajo.id})}" method="post" style="margin-top: 10px;">
+          <button type="submit" style="background: none; border: none; color: #e74c3c; cursor: pointer;">
+            <i class="fas fa-trash-alt"></i> Quitar de favoritos
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>

@@ -1,10 +1,6 @@
 package com.marketplace.marketplace.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Trabajo {
@@ -17,23 +13,31 @@ public class Trabajo {
     private String descripcion;
     private String categoria;
 
-    @Column(name = "imagen_url") // Asegura que coincida con tu columna en la base de datos
+    @Column(name = "imagen_url")
     private String imagenUrl;
 
     private Double precio;
     private String numeroContacto;
 
+    @Column(nullable = false)
+    private boolean aprobado = false; // Por defecto no aprobado
+
+    @ManyToOne
+    private Usuario usuario;
+
     // Constructor vacío obligatorio para JPA
     public Trabajo() {}
 
     // Constructor con parámetros
-    public Trabajo(String titulo, String descripcion, String categoria, String imagenUrl, Double precio, String numeroContacto) {
+    public Trabajo(String titulo, String descripcion, String categoria, String imagenUrl,
+                   Double precio, String numeroContacto) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.categoria = categoria;
         this.imagenUrl = imagenUrl;
         this.precio = precio;
         this.numeroContacto = numeroContacto;
+        this.aprobado = false;
     }
 
     // Getters y setters
@@ -92,5 +96,20 @@ public class Trabajo {
     public void setNumeroContacto(String numeroContacto) {
         this.numeroContacto = numeroContacto;
     }
-}
 
+    public boolean isAprobado() {
+        return aprobado;
+    }
+
+    public void setAprobado(boolean aprobado) {
+        this.aprobado = aprobado;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+}

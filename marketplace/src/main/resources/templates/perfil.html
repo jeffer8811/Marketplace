@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfil de Usuario</title>
+  <link rel="stylesheet" href="/css/perfil.css" />
+  <link rel="stylesheet" href="/css/index.css" />
+  <link rel="stylesheet" href="/css/navbar.css" />
+  <link rel="stylesheet" href="/css/footer.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <div th:replace="fragments/navbar :: navbar"></div>
+
+  <div class="perfil-container">
+    <h1>Hola, <span th:text="${usuario.nombre}">Usuario</span></h1>
+    <p><strong>Correo:</strong> <span th:text="${usuario.correo}">correo</span></p>
+    <p><strong>Rol:</strong> <span th:text="${usuario.rol}">ROL</span></p>
+
+    <!-- ✅ Botón para ver mensajes (visible para todos los roles) -->
+    <a href="/chat/inbox" style="display: inline-block; background-color: #3498db; color: white;
+            padding: 8px 12px; border-radius: 5px; text-decoration: none; margin-bottom: 20px;">
+      <i class="fas fa-comments"></i> Ver mensajes
+    </a>
+
+    <!-- Botón de cerrar sesión -->
+    <form th:action="@{/logout}" method="post" style="margin-bottom: 20px;">
+      <button type="submit" class="btn-cerrar-sesion">Cerrar sesión</button>
+    </form>
+
+    <!-- Solo si el rol es ESTUDIANTE -->
+    <div th:if="${usuario.rol?.toString()?.equalsIgnoreCase('ESTUDIANTE')}">
+      <!-- Botones -->
+      <div style="margin-bottom: 20px;">
+        <a href="/formulario" class="btn-subir">Subir un trabajo</a>
+        <a href="/favoritos" class="btn-subir" style="background-color: #e67e22; margin-left: 10px;">
+          <i class="fas fa-heart"></i> Ver mis favoritos
+        </a>
+      </div>
+
+      <h2>Mis trabajos subidos</h2>
+
+      <div th:if="${trabajosUsuario == null or #lists.isEmpty(trabajosUsuario)}">
+        <p>Aún no has subido ningún trabajo.</p>
+      </div>
+
+      <section class="card-container" th:if="${trabajosUsuario != null and !#lists.isEmpty(trabajosUsuario)}">
+        <div class="card" th:each="trabajo : ${trabajosUsuario}">
+          <div class="card-img-container">
+            <a th:href="@{/trabajo/{id}(id=${trabajo.id})}" style="text-decoration: none; color: inherit;">
+              <img th:src="${trabajo.imagenUrl}" th:alt="${trabajo.titulo}" />
+              <div class="img-hover-overlay">
+                <p class="descripcion-hover" th:text="${trabajo.descripcion}">Descripción</p>
+              </div>
+            </a>
+          </div>
+
+          <div class="card-content">
+            <a th:href="@{/trabajo/{id}(id=${trabajo.id})}" style="text-decoration: none; color: inherit;">
+              <h2 th:text="${trabajo.titulo}">Título</h2>
+              <p>
+                <strong>Precio: </strong>S/
+                <span th:text="${trabajo.precio}">0.00</span>
+              </p>
+            </a>
+
+            <!-- ✅ Botón Añadir a Favoritos -->
+            <form th:action="@{/favoritos/agregar/{id}(id=${trabajo.id})}" method="post" style="margin-top: 10px;">
+              <button type="submit" style="background: none; border: none; color: #e74c3c; cursor: pointer;">
+                <i class="fas fa-heart"></i> Añadir a favoritos
+              </button>
+            </form>
+
+
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div th:replace="fragments/footer :: footer"></div>
+
+</body>
+
+</html>
